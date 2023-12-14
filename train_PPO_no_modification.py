@@ -13,7 +13,7 @@ TIME_STEPS = 10000
 
 iters = 0
 
-while TIME_STEPS * iters < 5000000:
+while TIME_STEPS * iters < 10000000:
     iters += 1
-    model.learn(total_timesteps = TIME_STEPS, reset_num_timesteps = False, tb_log_name = "PPO_no_modification")
-    model.save(f"models/PPO_no_modification/{iters * TIME_STEPS}")
+    model.learn(total_timesteps = TIME_STEPS, reset_num_timesteps = False, tb_log_name = "PPO_no_modification_10M")
+    model.save(f"models/PPO_no_modification_10M/{iters * TIME_STEPS}")

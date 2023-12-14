@@ -1,16 +1,24 @@
 import gymnasium as gym
-from stable_baselines3 import DQN, A2C, PPO
+from stable_baselines3 import PPO
 
-model = PPO.load("models/PPO_no_modification/3800000")
-env = gym.make("LunarLander-v2", render_mode = "human")
 
-observation, info = env.reset()
+env = gym.make('LunarLander-v2', render_mode="human")
+env.reset()
 
-for _ in range(100000):
-    env.render()
-    action, _ = model.predict(observation)
-    observation, reward, terminated, truncated, info = env.step(action)
-    # Reset the sim everytime the lander makes contact with the surface of the moon
-    if terminated or truncated:
-        observation, info = env.reset()
+models_dir = "models/PPO_with_custom_rewards_3_10M"
+model_path = f"{models_dir}/1100000"
+
+model = PPO.load(model_path, env=env)
+
+episodes = 10
+
+for ep in range(episodes):
+    obs, _ = env.reset()
+    done = False
+    while not done:
+        env.render()
+        action, _ = model.predict(obs)
+        obs, reward, done, truncated, prob = env.step(action.item())
+        print(reward)
+
 env.close()

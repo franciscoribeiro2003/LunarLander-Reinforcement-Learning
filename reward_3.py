@@ -7,50 +7,58 @@ class CustomLunarLander(Wrapper):
     def step(self, action):
         obs, reward, done, truncated, info = self.env.step(action)
 
-        throttle_threshold = 0.5
-        left_engine_threshold = 0.5
-        right_engine_threshold = 0.5
-
         if done:
-            if obs[0] > -0.1 and obs[0] < 0.1  and obs[3] > -0.5 and obs[4] < 0.5 and abs(obs[5]) < 0.05:
-                reward += 130  # Recompensa por mover da parte superior para a plataforma e parar
+            if obs[0] > -0.1 and obs[0] < 0.1  and obs[3] > -0.5:
+                reward += 10  # Recompensa por mover da parte superior para a plataforma e parar
                 if obs[6] == 1 and obs[7] == 1:
-                    reward += 20  # Recompensa por cada perna com contato no solo
+                    reward += 1.5  # Recompensa por cada perna com contato no solo
 
             elif obs[0] > -0.3 and obs[0] < 0.3 and obs[3] > -0.5 and obs[4] < 0.5 and abs(obs[5]) < 0.05:
-                reward += 100
+                reward += 7
                 if obs[6] == 1 and obs[7] == 1:
-                    reward += 20
+                    reward += 1.5
 
             else:
-                reward -= 100
+                reward -= 10
+
+            reward += (1 - abs(obs[4])) * 5
 
         else:
-            if obs[0] > -0.3 and obs[0] < 0.3:
-                reward -= 0.1
-            else:
-                reward -= 0.5
-
-             # Shape reward based on actions (throttle and left-right engines)
-            main_engine_action = action[0]
-            left_right_action = action[1]
-
-            if main_engine_action >= throttle_threshold:
-                reward -= 0.2  # Penalize for higher throttle usage
-
-            if abs(left_right_action) >= left_engine_threshold or abs(left_right_action) >= right_engine_threshold:
-                reward -= 0.1  # Penalize for excessive left-right engine usage
-
+            reward -= 0.1
 
         return obs, reward, done, truncated, info
 
 
 
 
-# Action is two floats [main engine, left-right engines].
-            # Main engine: -1..0 off, 0..+1 throttle from 50% to 100% power. Engine can't work with less than 50% power.
-            # Left-right:  -1.0..-0.5 fire left engine, +0.5..+1.0 fire right engine, -0.5..0.5 off
-        #     self.action_space = spaces.Box(-1, +1, (2,), dtype=np.float32)
-        # else:
-        #     # Nop, fire left engine, main engine, right engine
-        #     self.action_space = spaces.Discrete(4)
+            # Se o lander se moveu para longe da plataforma ou colidiu
+             # Penalidade por sair da plataforma ou colidir
+
+            # if obs[0] >= -0.3 and obs[0] <= 0.3: # coordinates inside the landing site
+            #     reward = 5
+            #     if obs[0] >= -0.1 and obs[0] <= 0.1: # coordinates in perfect center
+            #         reward = 10
+            #     if obs[6] == 1 and obs[7] == 1: # both legs touching the ground
+            #         reward = 15
+            #         if obs[0] >= -0.1 and obs[0] <= 0.1:
+            #             reward = 20
+            #     elif obs[6] == 1 or obs[7] == 1:  # one leg touching the ground
+            #         reward = 3
+            #     elif obs[6] == 0 and obs[7] == 0:  # no legs touching the ground
+            #         reward = 0
+
+            # elif obs[0] >= -0.6 and obs[0] <= 0.6:  # coordinates to be closer to the landing site
+            #     reward = -15
+
+            # else:
+            #     reward = -20
+
+        """
+        else:
+            if obs[0] >= -0.3 and obs[0] <= 0.3: # coordinates inside the landing site
+                reward = - 5
+                if obs[4] >= 0.5 and obs[5] <= -0.5:
+                    reward = - 7 # penalize the lander for rotating
+            else:
+                reward = - 10
+         """
