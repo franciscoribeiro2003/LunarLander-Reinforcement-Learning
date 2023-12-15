@@ -25,7 +25,7 @@ while TIME_STEPS * iters < 10000000:
     iters += 1
     #model1.learn(total_timesteps=TIME_STEPS, reset_num_timesteps=False, tb_log_name="PPO_reward_1_10M")
     #model2.learn(total_timesteps=TIME_STEPS, reset_num_timesteps=False, tb_log_name="PPO_reward_2_10M")
-    model3.learn(total_timesteps=TIME_STEPS, reset_num_timesteps=False, tb_log_name="PPO_reward_3_10M")
+    model3.learn(total_timesteps=TIME_STEPS, reset_num_timesteps=False, tb_log_name="PPO_reward_3_10M_2")
     #model1.save(f"models/PPO_with_custom_rewards_1_10M/{iters * TIME_STEPS}")
     #model2.save(f"models/PPO_with_custom_rewards_2_10M/{iters * TIME_STEPS}")
-    model3.save(f"models/PPO_with_custom_rewards_3_10M/{iters * TIME_STEPS}")
+    model3.save(f"models/PPO_with_custom_rewards_3_10M_2/{iters * TIME_STEPS}")
