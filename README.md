@@ -1,14 +1,20 @@
 # Lunar Lander Reinforcement Learning
-
+This project was developed by [Marisa Azevedo](https://github.com/marisaazevedo) and [Francisco Ribeiro](https://github.com/franciscoribeiro2003) for [Introduction to Intelligent Autonomous Systems (CC3042)](https://sigarra.up.pt/fcup/en/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=529876) course at University of Porto. The main goal of this project is to train an agent to land a lunar lander in a landing zone, using reinforcement learning.
 ### Install dependecies
 
 ``` pip install -r requirements.txt ```
 
 ### Run
 
-To run a trained model, just run the following command:
+To run a trained model without changes, just run the following command:
 
-``` python test_trained_model.py ```
+``` python test_trained_model.py -o```
+
+To run the original model, and the model with changes, run the following command:
+
+``` python test_trained_model.py -c```
+
+The other python files are used to train the models, except for the scricpts that are called reward1.py, reward2.py and reward3.py, which are the changes of the reward structure. The other names are self explanatory.
 
 ### Environment choosed
 
@@ -16,7 +22,7 @@ To run a trained model, just run the following command:
 
 ### Reinforcement learning algorithms
 
-We decide to try tree different algorithms: PPO, A2C and DQN.
+We decide to try three different algorithms: PPO, A2C and DQN.
 
 Length                     |  Reward
 :-------------------------:|:-------------------------:
@@ -48,7 +54,7 @@ We did some changes to the reward structures based on the agent's observation sp
 
 #### Reward 1:
 
-So the first reward structure would value the agent for being in the landing zone, for having the legs touching the ground and the velocity of the landing not being to rough. We also value the agent for being in the middle of the landing zone, we penalize the agent for not being in the landing zone, the agent will be receiving a reward or loosing points acording to the angle of the lander. The final penalty is, as long the lander is still in the air, it will be decrimenting points to make sure the agent will try to land as fast as possible.
+So the first reward structure would value the agent for being in the landing zone, for having the legs touching the ground and the velocity of the landing not being to rough neither the angle and the angular velocity is at desired values, meaning vertical align and not rotating. We also value the agent for being in the middle of the landing zone, we penalize the agent for not being in the landing zone, the agent will be receiving a reward or loosing points acording to the angle of the lander. The final penalty is, as long the lander is still in the air, it will be decrimenting points to make sure the agent will try to land as fast as possible.
 
 ```py
 if done:
@@ -143,7 +149,7 @@ Length             |  Reward
 :-------------------------:|:-------------------------:
 ![](imgs_gifs/4.1.png)  |  ![](imgs_gifs/4.2.png)
 
-As seen in the plots above, we noticedd that our model with changes, improved slightly compared to the model without changes. Since the length of an episode is mostly shorter and the rewards remains linear and constant, we judge that our changes were positive and improved the model. Here's a render of the best moment if each one of the models, just so we can see the difference besides the data:
+As seen in the plots above, we noticed that our model with changes, improved slightly compared to the model without changes. Since the length of an episode is mostly shorter and the rewards remains linear and constant, we judge that our changes were positive and improved the model. Here's a render of the best moment if each one of the models, just so we can see the difference besides the data:
 
 | Without changes | With changes |
 |:---:|:---:|

@@ -24,7 +24,7 @@ def main():
         model_path = f"{models_dir}/6000000"
 
     elif args.custom:
-        models_dir = "models/PPO_with_custom_rewards_1_10M"
+        models_dir = "models/PPO_with_custom_rewards_3_10M"
         model_path = f"{models_dir}/5430000"
 
     model = PPO.load(model_path, env=env)

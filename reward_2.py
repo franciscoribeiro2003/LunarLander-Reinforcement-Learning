@@ -14,13 +14,13 @@ class CustomLunarLander(Wrapper):
                     reward += 1.5  # Recompensa por cada perna com contato no solo
 
             elif obs[0] > -0.3 and obs[0] < 0.3 and obs[3] > -0.5 and obs[4] < 0.5 and abs(obs[5]) < 0.05:
-                reward += 7
+                reward += 7 # Recompensa por estar na platoforma e parar bem.
                 if obs[6] == 1 and obs[7] == 1:
-                    reward += 1.5
+                    reward += 1.5 # Recompensa por cada perna com contato no solo
 
             else:
-                reward -= 10
+                reward -= 10 # Penalidade por cair
 
-            reward += (1 - abs(obs[4])) * 5
+            reward += (1 - abs(obs[4])) * 5 # Recompensa por estar na vertical
 
         return obs, reward, done, truncated, info
