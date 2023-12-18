@@ -6,11 +6,11 @@ This project was developed by [Marisa Azevedo](https://github.com/marisaazevedo)
 
 ### Run
 
-To run a trained model without changes, just run the following command:
+To run the model without changes, just run the following command:
 
 ``` python test_trained_model.py -o```
 
-To run the original model, and the model with changes, run the following command:
+To run the model with changes, run the following command:
 
 ``` python test_trained_model.py -c```
 
